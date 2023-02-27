@@ -6,4 +6,5 @@ export interface ICampaignEntry {
   radius: number;
   status: boolean;
   town: string;
+  id: string;
 }
