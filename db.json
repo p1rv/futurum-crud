@@ -1,0 +1,43 @@
+{
+  "campaigns": [
+    {
+      "bid_amount": 10000,
+      "campaign_fund": 1000000,
+      "campaign_name": "Campaign One",
+      "keywords": [
+        "kw1",
+        "kw2"
+      ],
+      "radius": 10,
+      "status": true,
+      "town": "Kraków",
+      "id": 1
+    },
+    {
+      "bid_amount": 10000,
+      "campaign_fund": 100000,
+      "campaign_name": "Campaign Two",
+      "keywords": [
+        "kw2",
+        "kw3"
+      ],
+      "radius": 16,
+      "status": false,
+      "town": "Wrocław",
+      "id": 2
+    },
+    {
+      "bid_amount": 50000,
+      "campaign_fund": 1500000,
+      "campaign_name": "Campaign Three",
+      "keywords": [
+        "kw3",
+        "kw4"
+      ],
+      "radius": 36,
+      "status": true,
+      "town": "Warszawa",
+      "id": 3
+    }
+  ]
+}
