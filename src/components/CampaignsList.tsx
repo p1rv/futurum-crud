@@ -1,5 +1,5 @@
 import { CampaignDetails } from "./CampaignDetails";
-import { useFetchCampaignsQuery } from "./store";
+import { useFetchCampaignsQuery } from "../store";
 
 export const CampaignsList: React.FC = () => {
   const { data, error, isFetching } = useFetchCampaignsQuery(null);

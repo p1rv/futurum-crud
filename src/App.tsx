@@ -1,4 +1,4 @@
-import { Campaigns } from "./Campaigns";
+import { Campaigns } from "./components/Campaigns";
 
 const App = () => {
   document.title = "Futurum | CRUD";
