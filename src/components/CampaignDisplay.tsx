@@ -4,7 +4,7 @@ import { Switch } from "./Switch";
 export const CampaignDisplay: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
   return (
     <div
-      className="w-full shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2"
+      className="w-full shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2 cursor-pointer"
       onClick={toggleEditMode}
     >
       <p className="text-3xl font-bold mb-4">{campaign.campaignName}</p>
