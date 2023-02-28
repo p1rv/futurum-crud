@@ -5,7 +5,7 @@ const App = () => {
 
   return (
     <div className="w-screen flex justify-center">
-      <div className="w-full sm:w-4/5 flex justify-center">
+      <div className="w-full sm:w-4/5 md:w-3/4 lg:w-1/2 flex justify-center">
         <Campaigns />
       </div>
     </div>
