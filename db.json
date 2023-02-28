@@ -2,7 +2,7 @@
   "campaigns": [
     {
       "bidAmount": 10003,
-      "campaignFund": 1000000,
+      "campaignFund": 1000003,
       "campaignName": "Campaign One",
       "keywords": [
         "kw1",
@@ -22,7 +22,7 @@
         "kw3"
       ],
       "radius": 16,
-      "status": false,
+      "status": true,
       "town": "Wrocław",
       "id": 2
     },

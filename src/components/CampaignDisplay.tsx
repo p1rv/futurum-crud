@@ -18,7 +18,7 @@ export const CampaignDisplay: React.FC<ICampaignDetailsProps> = ({ campaign, tog
       </div>
       <div className="flex flex-row justify-between">
         <p>Campaign Fund</p>
-        <p>{campaign.campaignName}</p>
+        <p>{campaign.campaignFund}</p>
       </div>
       <div className="flex flex-row justify-between">
         <p>Status</p>

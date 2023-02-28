@@ -10,11 +10,17 @@ export const campaignsApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Campaigns", "SingleCampaign"],
   endpoints: (builder) => ({
     fetchCampaigns: builder.query<ICampaignEntry[], null>({
+      providesTags: (result) =>
+        result
+          ? [...result.map(({ id }) => ({ type: "SingleCampaign" as const, id })), { type: "Campaigns", id: "LIST" }]
+          : [{ type: "Campaigns", id: "LIST" }],
       query: () => ({ url: "/campaigns", method: "GET" }),
     }),
     updateCampaign: builder.mutation<ICampaignEntry, ICampaignEntry>({
+      invalidatesTags: (result, error, arg) => [{ type: "SingleCampaign", id: arg.id }],
       query: ({ id, ...rest }) => ({ url: `/campaigns/${id}`, method: "PUT", body: { ...rest } }),
     }),
   }),
