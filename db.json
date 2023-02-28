@@ -6,12 +6,8 @@
       "campaignName": "Campaign One",
       "keywords": [
         "kw2",
-        "kw3",
-        "kw4",
-        "kw1",
-        "kw5",
         "kw6",
-        "kw7"
+        "kw5"
       ],
       "radius": 10,
       "status": false,

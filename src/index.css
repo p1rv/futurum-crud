@@ -28,6 +28,7 @@
 
 input.rbt-input-hint {
   border: 0 !important;
+  margin-left: 2px !important;
 }
 
 .rbt-token {
@@ -43,4 +44,5 @@ input.rbt-input-hint {
   padding: 0.5em 1em;
   box-shadow: 0 5px 10px #00000040;
   border-radius: 0.4em;
+  z-index: 10;
 }

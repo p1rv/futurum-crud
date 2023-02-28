@@ -65,10 +65,15 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
         <p>Keywords</p>
         <Typeahead
           id="keywords"
+          className="!max-w-[50%]"
           multiple
           allowNew
           onChange={(selected) => {
-            setKeywords(selected.map((keyword) => (isString(keyword) ? keyword : keyword.label)) as string[]);
+            setKeywords(
+              selected
+                .map((keyword) => (isString(keyword) ? keyword : keyword.label))
+                .filter((keyword, index, arr) => arr.indexOf(keyword) === index) as string[]
+            );
           }}
           options={savedKeywords}
           selected={keywords}
