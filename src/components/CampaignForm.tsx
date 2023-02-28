@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useUpdateCampaignMutation } from "../store";
+import { useDeleteCampaignMutation, useUpdateCampaignMutation } from "../store";
 import { ICampaignDetailsProps } from "./CampaignItem";
 import { Switch } from "./Switch";
 
 export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
+  const [campaignName, setCampaignName] = useState(campaign.campaignName);
   const [keywords, setKeywords] = useState(campaign.keywords.join(", "));
   const [bidAmount, setBidAmount] = useState(campaign.bidAmount);
   const [campaignFund, setCampaignFund] = useState(campaign.campaignFund);
@@ -11,16 +12,26 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
   const [town, setTown] = useState(campaign.town);
   const [radius, setRadius] = useState(campaign.radius);
 
-  const [updateCampaign, result] = useUpdateCampaignMutation();
+  const [updateCampaign] = useUpdateCampaignMutation();
+  const [deleteCampaign] = useDeleteCampaignMutation();
 
   const onSubmit = () => {
-    toggleEditMode();
     updateCampaign({ ...campaign, keywords: keywords.split(", "), bidAmount, campaignFund, status, town, radius });
+    toggleEditMode();
+  };
+
+  const onDelete = () => {
+    deleteCampaign(campaign.id);
+    toggleEditMode();
   };
 
   return (
-    <div className="w-full shadow-[0_0_40px_#00000030] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2">
-      <p className="text-3xl font-bold mb-4">{campaign.campaignName}</p>
+    <div className="campaign-form w-full shadow-[0_0_40px_#00000030] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2">
+      <input
+        className="text-3xl font-bold mb-4"
+        value={campaignName}
+        onChange={(e) => setCampaignName(e.target.value)}
+      />
       <div className="flex flex-row justify-between">
         <p>Keywords</p>
         <input
@@ -69,12 +80,20 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
           onChange={(e) => setRadius(e.target.valueAsNumber)}
         />
       </div>
-      <button
-        className="bg-blue-500 rounded-md px-8 py-4 "
-        onClick={onSubmit}
-      >
-        Apply changes
-      </button>
+      <div className="flex justify-between">
+        <button
+          className="bg-blue-500 rounded-md px-8 py-4 "
+          onClick={onSubmit}
+        >
+          Apply changes
+        </button>
+        <button
+          className="bg-red-500 rounded-md px-8 py-4 "
+          onClick={onDelete}
+        >
+          Delete campaign
+        </button>
+      </div>
     </div>
   );
 };

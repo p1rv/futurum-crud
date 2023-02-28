@@ -23,7 +23,11 @@ export const campaignsApi = createApi({
       invalidatesTags: (result, error, arg) => [{ type: "SingleCampaign", id: arg.id }],
       query: ({ id, ...rest }) => ({ url: `/campaigns/${id}`, method: "PUT", body: { ...rest } }),
     }),
+    deleteCampaign: builder.mutation<ICampaignEntry, ICampaignEntry["id"]>({
+      invalidatesTags: (result, error, arg) => [{ type: "SingleCampaign", id: arg }],
+      query: (id) => ({ url: `/campaigns/${id}`, method: "DELETE" }),
+    }),
   }),
 });
 
-export const { useFetchCampaignsQuery, useUpdateCampaignMutation } = campaignsApi;
+export const { useFetchCampaignsQuery, useUpdateCampaignMutation, useDeleteCampaignMutation } = campaignsApi;
