@@ -14,7 +14,10 @@ export const campaignsApi = createApi({
     fetchCampaigns: builder.query<ICampaignEntry[], null>({
       query: () => ({ url: "/campaigns", method: "GET" }),
     }),
+    updateCampaign: builder.mutation<ICampaignEntry, ICampaignEntry>({
+      query: ({ id, ...rest }) => ({ url: `/campaigns/${id}`, method: "PUT", body: { ...rest } }),
+    }),
   }),
 });
 
-export const { useFetchCampaignsQuery } = campaignsApi;
+export const { useFetchCampaignsQuery, useUpdateCampaignMutation } = campaignsApi;

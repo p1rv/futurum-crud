@@ -1,9 +1,9 @@
 {
   "campaigns": [
     {
-      "bid_amount": 10000,
-      "campaign_fund": 1000000,
-      "campaign_name": "Campaign One",
+      "bidAmount": 10003,
+      "campaignFund": 1000000,
+      "campaignName": "Campaign One",
       "keywords": [
         "kw1",
         "kw2"
@@ -14,9 +14,9 @@
       "id": 1
     },
     {
-      "bid_amount": 10000,
-      "campaign_fund": 100000,
-      "campaign_name": "Campaign Two",
+      "bidAmount": 10000,
+      "campaignFund": 100000,
+      "campaignName": "Campaign Two",
       "keywords": [
         "kw2",
         "kw3"
@@ -27,9 +27,9 @@
       "id": 2
     },
     {
-      "bid_amount": 50000,
-      "campaign_fund": 1500000,
-      "campaign_name": "Campaign Three",
+      "bidAmount": 50000,
+      "campaignFund": 1500000,
+      "campaignName": "Campaign Three",
       "keywords": [
         "kw3",
         "kw4"
@@ -38,6 +38,28 @@
       "status": true,
       "town": "Warszawa",
       "id": 3
+    }
+  ],
+  "towns": [
+    {
+      "name": "Kraków",
+      "id": 1
+    },
+    {
+      "name": "Wrocław",
+      "id": 2
+    },
+    {
+      "name": "Warszawa",
+      "id": 3
+    },
+    {
+      "name": "Gdańsk",
+      "id": 4
+    },
+    {
+      "name": "Katowice",
+      "id": 5
     }
   ]
 }
