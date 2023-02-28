@@ -10,11 +10,14 @@ export const keywordsApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Keywords"],
   endpoints: (builder) => ({
     fetchKeywords: builder.query<IBasicEntry[], null>({
+      providesTags: () => [{ type: "Keywords", id: "LIST" }],
       query: () => ({ url: "/keywords", method: "GET" }),
     }),
     addKeyword: builder.mutation<IBasicEntry[], string>({
+      invalidatesTags: () => [{ type: "Keywords", id: "LIST" }],
       query: (newKeyword) => ({ url: "/keywords", method: "POST", body: { name: newKeyword } }),
     }),
   }),

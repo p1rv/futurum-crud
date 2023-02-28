@@ -10,7 +10,8 @@
         "kw4",
         "kw1",
         "kw5",
-        "kw6"
+        "kw6",
+        "kw7"
       ],
       "radius": 10,
       "status": false,
@@ -26,7 +27,9 @@
         "kw3",
         "kw5",
         "kw1",
-        "kw4"
+        "kw4",
+        "kw6",
+        "kw7"
       ],
       "radius": 16,
       "status": true,
@@ -93,6 +96,10 @@
     {
       "name": "kw6",
       "id": 6
+    },
+    {
+      "name": "kw7",
+      "id": 7
     }
   ]
 }
