@@ -7,7 +7,10 @@
       "keywords": [
         "kw2",
         "kw3",
-        "kw4"
+        "kw4",
+        "kw1",
+        "kw5",
+        "kw6"
       ],
       "radius": 10,
       "status": false,
@@ -20,7 +23,10 @@
       "campaignName": "Campaign Two",
       "keywords": [
         "kw2",
-        "kw3"
+        "kw3",
+        "kw5",
+        "kw1",
+        "kw4"
       ],
       "radius": 16,
       "status": true,
@@ -79,6 +85,14 @@
     {
       "id": 4,
       "name": "kw4"
+    },
+    {
+      "name": "kw5",
+      "id": 5
+    },
+    {
+      "name": "kw6",
+      "id": 6
     }
   ]
 }

@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { isString } from "react-bootstrap-typeahead/types/utils";
-import { useDeleteCampaignMutation, useFetchKeywordsQuery, useFetchTownsQuery, useUpdateCampaignMutation } from "../store";
+import {
+  useAddKeywordMutation,
+  useDeleteCampaignMutation,
+  useFetchKeywordsQuery,
+  useFetchTownsQuery,
+  useUpdateCampaignMutation,
+} from "../store";
 import { ICampaignDetailsProps } from "./CampaignItem";
 import { Switch } from "./Switch";
 
@@ -18,12 +24,14 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
 
   const [updateCampaign] = useUpdateCampaignMutation();
   const [deleteCampaign] = useDeleteCampaignMutation();
+  const [addKeyword] = useAddKeywordMutation();
   const { data: towns } = useFetchTownsQuery(null);
   const { data: keywordsData = [] } = useFetchKeywordsQuery(null);
   const savedKeywords = keywordsData.map(({ name }) => name);
 
   const onSubmit = () => {
     updateCampaign({ ...campaign, keywords, bidAmount, campaignFund, status, town, radius });
+    keywords.filter((keyword) => !savedKeywords.includes(keyword)).forEach((keyword) => addKeyword(keyword));
     toggleEditMode();
   };
 

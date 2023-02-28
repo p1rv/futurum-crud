@@ -14,7 +14,10 @@ export const keywordsApi = createApi({
     fetchKeywords: builder.query<IBasicEntry[], null>({
       query: () => ({ url: "/keywords", method: "GET" }),
     }),
+    addKeyword: builder.mutation<IBasicEntry[], string>({
+      query: (newKeyword) => ({ url: "/keywords", method: "POST", body: { name: newKeyword } }),
+    }),
   }),
 });
 
-export const { useFetchKeywordsQuery } = keywordsApi;
+export const { useFetchKeywordsQuery, useAddKeywordMutation } = keywordsApi;
