@@ -1,14 +1,13 @@
-import { ICampaignEntry } from "../types";
+import { ICampaignDetailsProps } from "./CampaignItem";
 import { Switch } from "./Switch";
 
-interface ICampaignDetailsProps {
-  campaign: ICampaignEntry;
-}
-
-export const CampaignDetails: React.FC<ICampaignDetailsProps> = ({ campaign }) => {
+export const CampaignDisplay: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
   return (
-    <div className="w-full shadow-[0_0_40px_#00000030] rounded-2xl p-4 my-8">
-      <p className="text-xl font-bold mb-4">{campaign.campaign_name}</p>
+    <div
+      className="w-full shadow-[0_0_40px_#00000030] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2"
+      onClick={toggleEditMode}
+    >
+      <p className="text-3xl font-bold mb-4">{campaign.campaign_name}</p>
       <div className="flex flex-row justify-between">
         <p>Keywords</p>
         <p>{campaign.keywords.join(", ")}</p>
@@ -24,6 +23,7 @@ export const CampaignDetails: React.FC<ICampaignDetailsProps> = ({ campaign }) =
       <div className="flex flex-row justify-between">
         <p>Status</p>
         <Switch
+          disabled
           value={campaign.status}
           onClick={() => {}}
         />

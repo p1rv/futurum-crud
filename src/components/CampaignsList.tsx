@@ -1,4 +1,4 @@
-import { CampaignDetails } from "./CampaignDetails";
+import { CampaignItem } from "./CampaignItem";
 import { useFetchCampaignsQuery } from "../store";
 
 export const CampaignsList: React.FC = () => {
@@ -8,7 +8,7 @@ export const CampaignsList: React.FC = () => {
     <div>
       {data &&
         data.map((campaign) => (
-          <CampaignDetails
+          <CampaignItem
             key={campaign.id}
             campaign={campaign}
           />
