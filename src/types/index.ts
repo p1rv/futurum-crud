@@ -8,3 +8,8 @@ export interface ICampaignEntry {
   town: string;
   id: string;
 }
+
+export interface IBasicEntry {
+  id: string;
+  name: string;
+}

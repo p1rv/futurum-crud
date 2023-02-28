@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useDeleteCampaignMutation, useUpdateCampaignMutation } from "../store";
+import { useDeleteCampaignMutation, useFetchTownsQuery, useUpdateCampaignMutation } from "../store";
 import { ICampaignDetailsProps } from "./CampaignItem";
 import { Switch } from "./Switch";
 
@@ -16,6 +16,7 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
 
   const [updateCampaign] = useUpdateCampaignMutation();
   const [deleteCampaign] = useDeleteCampaignMutation();
+  const { data: towns, error, isFetching } = useFetchTownsQuery(null);
 
   const onSubmit = () => {
     updateCampaign({ ...campaign, keywords: keywords.split(", "), bidAmount, campaignFund, status, town, radius });
@@ -32,9 +33,9 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
   };
 
   useEffect(() => {
-    window.addEventListener("mousedown", onWindowClick);
+    window.addEventListener("click", onWindowClick, { capture: true });
     return () => {
-      window.removeEventListener("mousedown", onWindowClick);
+      window.removeEventListener("click", onWindowClick, { capture: true });
     };
   }, []);
 
@@ -82,10 +83,21 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
       </div>
       <div className="flex flex-row justify-between">
         <p>Town</p>
-        <input
-          value={town}
-          onChange={(e) => setTown(e.target.value)}
-        />
+        {towns ? (
+          <select
+            value={town}
+            onChange={(e) => setTown(e.target.value)}
+          >
+            {towns.map((town) => (
+              <option key={town.id}>{town.name}</option>
+            ))}
+          </select>
+        ) : (
+          <input
+            value={town}
+            disabled
+          />
+        )}
       </div>
       <div className="flex flex-row justify-between">
         <p>Radius</p>
