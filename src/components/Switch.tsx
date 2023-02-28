@@ -10,6 +10,7 @@ export const Switch: React.FC<ISwitchProps> = ({ disabled, value, onClick }) => 
   const classes = classNames(
     "w-[45px]",
     "h-[25px]",
+    "my-1",
     "rounded-full",
     "relative",
     "after:absolute",

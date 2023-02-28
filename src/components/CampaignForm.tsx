@@ -26,7 +26,7 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
   };
 
   return (
-    <div className="campaign-form w-full shadow-[0_0_40px_#00000030] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2">
+    <div className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2">
       <input
         className="text-3xl font-bold mb-4"
         value={campaignName}
