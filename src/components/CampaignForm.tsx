@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDeleteCampaignMutation, useUpdateCampaignMutation } from "../store";
 import { ICampaignDetailsProps } from "./CampaignItem";
 import { Switch } from "./Switch";
@@ -11,6 +11,8 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
   const [status, setStatus] = useState(campaign.status);
   const [town, setTown] = useState(campaign.town);
   const [radius, setRadius] = useState(campaign.radius);
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const [updateCampaign] = useUpdateCampaignMutation();
   const [deleteCampaign] = useDeleteCampaignMutation();
@@ -25,8 +27,22 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
     toggleEditMode();
   };
 
+  const onWindowClick = (e: MouseEvent) => {
+    !wrapperRef.current?.contains(e.target as HTMLElement) && toggleEditMode();
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousedown", onWindowClick);
+    return () => {
+      window.removeEventListener("mousedown", onWindowClick);
+    };
+  }, []);
+
   return (
-    <div className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2">
+    <div
+      className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2"
+      ref={wrapperRef}
+    >
       <input
         className="text-3xl font-bold mb-4"
         value={campaignName}
