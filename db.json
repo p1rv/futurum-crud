@@ -9,7 +9,7 @@
         "kw2"
       ],
       "radius": 10,
-      "status": true,
+      "status": false,
       "town": "Kraków",
       "id": 1
     },
@@ -60,6 +60,24 @@
     {
       "name": "Katowice",
       "id": 5
+    }
+  ],
+  "keywords": [
+    {
+      "id": 1,
+      "name": "kw1"
+    },
+    {
+      "id": 2,
+      "name": "kw2"
+    },
+    {
+      "id": 3,
+      "name": "kw3"
+    },
+    {
+      "id": 4,
+      "name": "kw4"
     }
   ]
 }

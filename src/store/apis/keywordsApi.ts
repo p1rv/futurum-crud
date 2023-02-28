@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IBasicEntry } from "../../types";
 
-export const townsApi = createApi({
-  reducerPath: "townsApi",
+export const keywordsApi = createApi({
+  reducerPath: "keywordsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3003",
     prepareHeaders: (headers) => {
@@ -11,10 +11,10 @@ export const townsApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    fetchTowns: builder.query<IBasicEntry[], null>({
-      query: () => ({ url: "/towns", method: "GET" }),
+    fetchKeywords: builder.query<IBasicEntry[], null>({
+      query: () => ({ url: "/keywords", method: "GET" }),
     }),
   }),
 });
 
-export const { useFetchTownsQuery } = townsApi;
+export const { useFetchKeywordsQuery } = keywordsApi;
