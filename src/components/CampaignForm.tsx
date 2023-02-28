@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { useDeleteCampaignMutation, useFetchTownsQuery, useUpdateCampaignMutation } from "../store";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { isString } from "react-bootstrap-typeahead/types/utils";
+import { useDeleteCampaignMutation, useFetchKeywordsQuery, useFetchTownsQuery, useUpdateCampaignMutation } from "../store";
 import { ICampaignDetailsProps } from "./CampaignItem";
 import { Switch } from "./Switch";
 
 export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
   const [campaignName, setCampaignName] = useState(campaign.campaignName);
-  const [keywords, setKeywords] = useState(campaign.keywords.join(", "));
+  const [keywords, setKeywords] = useState(campaign.keywords);
   const [bidAmount, setBidAmount] = useState(campaign.bidAmount);
   const [campaignFund, setCampaignFund] = useState(campaign.campaignFund);
   const [status, setStatus] = useState(campaign.status);
@@ -16,10 +18,12 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
 
   const [updateCampaign] = useUpdateCampaignMutation();
   const [deleteCampaign] = useDeleteCampaignMutation();
-  const { data: towns, error, isFetching } = useFetchTownsQuery(null);
+  const { data: towns } = useFetchTownsQuery(null);
+  const { data: keywordsData = [] } = useFetchKeywordsQuery(null);
+  const savedKeywords = keywordsData.map(({ name }) => name);
 
   const onSubmit = () => {
-    updateCampaign({ ...campaign, keywords: keywords.split(", "), bidAmount, campaignFund, status, town, radius });
+    updateCampaign({ ...campaign, keywords, bidAmount, campaignFund, status, town, radius });
     toggleEditMode();
   };
 
@@ -51,9 +55,15 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
       />
       <div className="flex flex-row justify-between">
         <p>Keywords</p>
-        <input
-          value={keywords}
-          onChange={(e) => setKeywords(e.target.value)}
+        <Typeahead
+          id="keywords"
+          multiple
+          allowNew
+          onChange={(selected) => {
+            setKeywords(selected.map((keyword) => (isString(keyword) ? keyword : keyword.label)) as string[]);
+          }}
+          options={savedKeywords}
+          selected={keywords}
         />
       </div>
       <div className="flex flex-row justify-between">

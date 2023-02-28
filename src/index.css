@@ -5,7 +5,7 @@
 .campaign-form input,
 .campaign-form select {
   outline: none;
-  border: 2px solid #00000020;
+  border: 2px solid #00000020 !important;
   border-radius: 0.4em;
   padding: 0.15em 0.4em;
   transition: border 0.2s;
@@ -24,4 +24,23 @@
 .campaign-form input:focus,
 .campaign-form select:focus {
   border-color: #00000080;
+}
+
+.rbt-input-hint {
+  border: none;
+}
+
+.rbt-token {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#keywords {
+  display: flex !important;
+  flex-direction: column;
+  background-color: white;
+  padding: 0.5em 1em;
+  box-shadow: 0 5px 10px #00000040;
+  border-radius: 0.4em;
 }

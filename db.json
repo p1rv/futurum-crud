@@ -5,8 +5,9 @@
       "campaignFund": 1000003,
       "campaignName": "Campaign One",
       "keywords": [
-        "kw1",
-        "kw2"
+        "kw2",
+        "kw3",
+        "kw4"
       ],
       "radius": 10,
       "status": false,
