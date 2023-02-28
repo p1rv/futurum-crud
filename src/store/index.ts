@@ -20,7 +20,7 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export { useFetchCampaignsQuery, useUpdateCampaignMutation, useDeleteCampaignMutation } from "./apis/campaignsApi";
+export { useFetchCampaignsQuery, useUpdateCampaignMutation, useDeleteCampaignMutation, useAddCampaignMutation } from "./apis/campaignsApi";
 export { useFetchTownsQuery } from "./apis/townsApi";
 export { useFetchKeywordsQuery, useAddKeywordMutation } from "./apis/keywordsApi";
 

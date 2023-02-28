@@ -19,6 +19,9 @@ export const campaignsApi = createApi({
           : [{ type: "Campaigns", id: "LIST" }],
       query: () => ({ url: "/campaigns", method: "GET" }),
     }),
+    addCampaign: builder.mutation<ICampaignEntry, Omit<ICampaignEntry, "id">>({
+      query: (campaign) => ({ url: "/campaigns", method: "POST", body: campaign }),
+    }),
     updateCampaign: builder.mutation<ICampaignEntry, ICampaignEntry>({
       invalidatesTags: (result, error, arg) => [{ type: "SingleCampaign", id: arg.id }],
       query: ({ id, ...rest }) => ({ url: `/campaigns/${id}`, method: "PUT", body: { ...rest } }),
@@ -30,4 +33,4 @@ export const campaignsApi = createApi({
   }),
 });
 
-export const { useFetchCampaignsQuery, useUpdateCampaignMutation, useDeleteCampaignMutation } = campaignsApi;
+export const { useFetchCampaignsQuery, useUpdateCampaignMutation, useDeleteCampaignMutation, useAddCampaignMutation } = campaignsApi;
