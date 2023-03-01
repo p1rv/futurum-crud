@@ -3,17 +3,18 @@ import classNames from "classnames";
 interface ISwitchProps {
   disabled?: boolean;
   value: boolean;
-  onClick: () => any;
+  onClick: (event: any) => any;
 }
 
 export const Switch: React.FC<ISwitchProps> = ({ disabled, value, onClick }) => {
   const classes = classNames(
+    "appearance-none",
     "w-[45px]",
     "h-[25px]",
     "my-1",
-    "rounded-full",
+    "!rounded-full",
     "relative",
-    "after:absolute",
+    "after:!absolute",
     "after:w-[19px]",
     "after:h-[19px]",
     "after:top-[3px]",
@@ -23,9 +24,12 @@ export const Switch: React.FC<ISwitchProps> = ({ disabled, value, onClick }) => 
   );
 
   return (
-    <div
+    <input
       className={classes}
-      onClick={disabled ? undefined : onClick}
+      type="checkbox"
+      checked={value}
+      onChange={onClick}
+      disabled={disabled}
     />
   );
 };

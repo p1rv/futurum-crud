@@ -33,7 +33,7 @@ export const CampaignAdd: React.FC<ICampaignAddProps> = ({ closeForm }) => {
   };
 
   return (
-    <div className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2">
+    <div>
       <CampaignForm
         onSubmit={onSubmit}
         onSubmitText="Add Campaign"

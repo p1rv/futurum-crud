@@ -12,10 +12,14 @@
   max-width: 50%;
 }
 
-.campaign-form > input,
+.campaign-form input[type="checkbox"] {
+  border: 0 !important;
+}
+
 .campaign-form .rbt-input-main,
 .campaign-form .rbt-input-hint {
   max-width: 100%;
+  width: 100%;
 }
 
 .campaign-form input:hover,

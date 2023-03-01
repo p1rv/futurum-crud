@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { isString } from "react-bootstrap-typeahead/types/utils";
+import { Form, Field } from "react-final-form";
 import {
   useAddKeywordMutation,
   useDeleteCampaignMutation,
@@ -24,115 +25,132 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
   const { data: keywordsData = [] } = useFetchKeywordsQuery(null);
   const savedKeywords = keywordsData.map(({ name }) => name);
 
-  const [campaignName, setCampaignName] = useState(campaign?.campaignName || "");
-  const [keywords, setKeywords] = useState<string[]>(campaign?.keywords || []);
-  const [bidAmount, setBidAmount] = useState(campaign?.bidAmount || 10);
-  const [campaignFund, setCampaignFund] = useState(campaign?.campaignFund || 100);
-  const [status, setStatus] = useState(campaign?.status || false);
-  const [town, setTown] = useState(campaign?.town || "");
-  const [radius, setRadius] = useState(campaign?.radius || 0);
+  const onFormSubmit = (formValues: React.FormEvent<HTMLFormElement>) => {
+    onSubmit(formValues as unknown as Omit<ICampaignEntry, "id">);
+  };
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit({ campaignName, keywords, bidAmount, campaignFund, status, town, radius });
+  const validate = (formValues: ICampaignEntry) => {
+    const errors = {} as ICampaignEntry;
+    if (!Object.hasOwn(formValues, "campaignName")) {
+      errors.campaignName = "Campaign Name is Mandatory";
+    }
+    return errors;
   };
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <input
-        className="text-3xl font-bold mb-4"
-        value={campaignName}
-        onChange={(e) => setCampaignName(e.target.value)}
-        required
-      />
-      <div className="flex flex-row justify-between">
-        <p>Keywords</p>
-        <Typeahead
-          id="keywords"
-          className="!max-w-[50%]"
-          multiple
-          allowNew
-          onChange={(selected) => {
-            setKeywords(
-              selected
-                .map((keyword) => (isString(keyword) ? keyword : keyword.label))
-                .filter((keyword, index, arr) => arr.indexOf(keyword) === index) as string[]
-            );
-          }}
-          options={savedKeywords}
-          selected={keywords}
-        />
-      </div>
-      <div className="flex flex-row justify-between">
-        <p>Bid Amount</p>
-        <input
-          type="number"
-          min={10}
-          value={bidAmount}
-          required
-          onChange={(e) => setBidAmount(e.target.valueAsNumber)}
-        />
-      </div>
-      <div className="flex flex-row justify-between">
-        <p>Campaign Fund</p>
-        <input
-          type="number"
-          min={10}
-          required
-          value={campaignFund}
-          onChange={(e) => setCampaignFund(e.target.valueAsNumber)}
-        />
-      </div>
-      <div className="flex flex-row justify-between">
-        <p>Status</p>
-        <Switch
-          value={status}
-          onClick={() => setStatus((currentStatus) => !currentStatus)}
-        />
-      </div>
-      <div className="flex flex-row justify-between">
-        <p>Town</p>
-        {towns ? (
-          <select
-            value={town}
-            required
-            onChange={(e) => setTown(e.target.value)}
-          >
-            {towns.map((town) => (
-              <option key={town.id}>{town.name}</option>
-            ))}
-          </select>
-        ) : (
-          <input
-            value={town}
-            disabled
+    <Form
+      onSubmit={onFormSubmit}
+      validate={(formValues) => validate(formValues as unknown as ICampaignEntry)}
+      render={({ handleSubmit }) => (
+        <form
+          onSubmit={handleSubmit}
+          className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2"
+        >
+          <Field
+            name="campaignName"
+            className="text-3xl font-bold mb-4 !max-w-[100%] w-full"
+            component="input"
+            placeholder="Campaign Name"
+            defaultValue={campaign?.campaignName}
           />
-        )}
-      </div>
-      <div className="flex flex-row justify-between">
-        <p>Radius</p>
-        <input
-          type="number"
-          min={0}
-          required
-          value={radius}
-          onChange={(e) => setRadius(e.target.valueAsNumber)}
-        />
-      </div>
-      <div className="flex justify-between">
-        <button
-          className="bg-blue-500 rounded-md px-8 py-4 "
-          type="submit"
-        >
-          {onSubmitText}
-        </button>
-        <button
-          className="bg-red-500 rounded-md px-8 py-4 "
-          onClick={onDiscard}
-        >
-          {onDiscardText}
-        </button>
-      </div>
-    </form>
+          <div className="flex flex-row justify-between">
+            <p>Keywords</p>
+            <Field
+              name="keywords"
+              component={({ input: { onFocus, ...rest }, meta, render }) => {
+                return (
+                  <Typeahead
+                    id="keywords"
+                    className="!max-w-[50%]"
+                    placeholder="Keywords"
+                    multiple
+                    allowNew
+                    options={savedKeywords}
+                    defaultSelected={campaign?.keywords}
+                    selected={rest.value || []}
+                    {...rest}
+                  />
+                );
+              }}
+            />
+          </div>
+          <div className="flex flex-row justify-between">
+            <p>Bid Amount</p>
+            <Field
+              name="bidAmount"
+              component="input"
+              placeholder="Bid Amount"
+              type="number"
+              min={10}
+              defaultValue={campaign?.bidAmount}
+            />
+          </div>
+          <div className="flex flex-row justify-between">
+            <p>Campaign Fund</p>
+            <Field
+              name="campaignFund"
+              component="input"
+              placeholder="Campaign Fund"
+              type="number"
+              min={100}
+              defaultValue={campaign?.campaignFund}
+            />
+          </div>
+          <div className="flex flex-row justify-between">
+            <p>Status</p>
+            <Field
+              name="status"
+              defaultValue={campaign?.status || false}
+              type="checkbox"
+              component={({ input }) => {
+                return (
+                  <Switch
+                    value={input.checked || false}
+                    onClick={input.onChange}
+                  />
+                );
+              }}
+            />
+          </div>
+          <div className="flex flex-row justify-between">
+            <p>Town</p>
+            <Field
+              name="town"
+              component="select"
+              defaultValue={campaign?.town}
+            >
+              {towns?.map((town) => (
+                <option key={town.id}>{town.name}</option>
+              ))}
+            </Field>
+          </div>
+          <div className="flex flex-row justify-between">
+            <p>Radius</p>
+            <Field
+              name="radius"
+              component="input"
+              type="number"
+              min={0}
+              placeholder="Radius"
+              defaultValue={campaign?.radius}
+            />
+          </div>
+          <div className="flex justify-between">
+            <button
+              className="bg-blue-500 rounded-md px-8 py-4 "
+              type="submit"
+            >
+              {onSubmitText}
+            </button>
+            <button
+              className="bg-red-500 rounded-md px-8 py-4 "
+              onClick={onDiscard}
+            >
+              {onDiscardText}
+            </button>
+          </div>
+        </form>
+      )}
+    />
   );
 };
