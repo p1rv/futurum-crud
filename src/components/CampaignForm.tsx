@@ -33,6 +33,12 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
     onSubmit(formValues as unknown as Omit<ICampaignEntry, "id">);
   };
 
+  const renderErrMessage = ({ error, touched }: FieldMetaState<string>) => {
+    if (error && touched) {
+      return <p className="absolute left-2 text-sm text-rose-600 min-w-max">{error}</p>;
+    }
+  };
+
   const renderInput = ({ input, meta, ...rest }: FieldRenderProps<any, HTMLInputElement, any>) => (
     <div className="relative input-group flex-1">
       <input
@@ -73,12 +79,6 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
       {renderErrMessage(meta)}
     </div>
   );
-
-  const renderErrMessage = ({ error, touched }: FieldMetaState<string>) => {
-    if (error && touched) {
-      return <p className="absolute left-2 text-sm text-rose-600">{error}</p>;
-    }
-  };
 
   const validate = (formValues: ICampaignEntry) => {
     const errors = {} as { [key in keyof ICampaignEntry]: string };
@@ -182,13 +182,13 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
           </div>
           <div className="flex justify-between">
             <button
-              className="bg-blue-500 rounded-md px-8 py-4 "
+              className="bg-blue-500 rounded-r-none rounded-lg px-8 py-4 flex-1"
               type="submit"
             >
               {onSubmitText}
             </button>
             <button
-              className="bg-red-500 rounded-md px-8 py-4 "
+              className="bg-red-500 rounded-l-none rounded-lg px-8 py-4 flex-1"
               onClick={onDiscard}
             >
               {onDiscardText}
