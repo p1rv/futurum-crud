@@ -31,8 +31,23 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
 
   const validate = (formValues: ICampaignEntry) => {
     const errors = {} as ICampaignEntry;
-    if (!Object.hasOwn(formValues, "campaignName")) {
+    if (!Object.hasOwn(formValues, "campaignName") || formValues.campaignName.length < 2) {
       errors.campaignName = "Campaign Name is Mandatory";
+    }
+    if (!Object.hasOwn(formValues, "keywords") || formValues.keywords.length < 1) {
+      errors.campaignName = "At Least 1 Keyword is Mandatory";
+    }
+    if (!Object.hasOwn(formValues, "bidAmount") || formValues.bidAmount < 10) {
+      errors.campaignName = "Bid Amount of At Least 10 is Mandatory";
+    }
+    if (!Object.hasOwn(formValues, "campaignFund") || formValues.campaignFund < 100) {
+      errors.campaignName = "Campaign Fund of At Least 100 is Mandatory";
+    }
+    if (!Object.hasOwn(formValues, "town") || !towns?.some(({ name }) => name === formValues.town)) {
+      errors.campaignName = "Town from Available List is Mandatory";
+    }
+    if (!Object.hasOwn(formValues, "radius") || formValues.radius < 0) {
+      errors.campaignName = "Radius is Mandatory";
     }
     return errors;
   };
@@ -57,21 +72,18 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             <p>Keywords</p>
             <Field
               name="keywords"
-              component={({ input: { onFocus, ...rest }, meta, render }) => {
-                return (
-                  <Typeahead
-                    id="keywords"
-                    className="!max-w-[50%]"
-                    placeholder="Keywords"
-                    multiple
-                    allowNew
-                    options={savedKeywords}
-                    defaultSelected={campaign?.keywords}
-                    selected={rest.value || []}
-                    {...rest}
-                  />
-                );
-              }}
+              component={({ input: { onFocus, ...rest }, meta, render }) => (
+                <Typeahead
+                  id="keywords"
+                  className="!max-w-[50%]"
+                  placeholder="Keywords"
+                  multiple
+                  allowNew
+                  options={savedKeywords}
+                  selected={rest.value || campaign?.keywords || []}
+                  {...rest}
+                />
+              )}
             />
           </div>
           <div className="flex flex-row justify-between">
