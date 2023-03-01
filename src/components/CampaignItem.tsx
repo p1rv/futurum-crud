@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ICampaignEntry } from "../types";
 import { CampaignDisplay } from "./CampaignDisplay";
-import { CampaignForm } from "./CampaignForm";
+import { CampaignEdit } from "./CampaignEdit";
 
 interface ICampaignItemProps {
   campaign: ICampaignEntry;
@@ -25,7 +25,7 @@ export const CampaignItem: React.FC<ICampaignItemProps> = ({ campaign }) => {
     );
   }
   return (
-    <CampaignForm
+    <CampaignEdit
       campaign={campaign}
       toggleEditMode={() => {
         setEditMode(false);

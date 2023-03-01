@@ -8,58 +8,42 @@ import {
   useFetchTownsQuery,
   useUpdateCampaignMutation,
 } from "../store";
-import { ICampaignDetailsProps } from "./CampaignItem";
+import { ICampaignEntry } from "../types";
 import { Switch } from "./Switch";
 
-export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
-  const [campaignName, setCampaignName] = useState(campaign.campaignName);
-  const [keywords, setKeywords] = useState(campaign.keywords);
-  const [bidAmount, setBidAmount] = useState(campaign.bidAmount);
-  const [campaignFund, setCampaignFund] = useState(campaign.campaignFund);
-  const [status, setStatus] = useState(campaign.status);
-  const [town, setTown] = useState(campaign.town);
-  const [radius, setRadius] = useState(campaign.radius);
+interface ICampaignFormProps {
+  campaign?: ICampaignEntry;
+  onSubmit: (campaign: Omit<ICampaignEntry, "id">) => any;
+  onDiscard: () => any;
+  onSubmitText: string;
+  onDiscardText: string;
+}
 
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-
-  const [updateCampaign] = useUpdateCampaignMutation();
-  const [deleteCampaign] = useDeleteCampaignMutation();
-  const [addKeyword] = useAddKeywordMutation();
+export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit, onDiscard, onSubmitText, onDiscardText }) => {
   const { data: towns } = useFetchTownsQuery(null);
   const { data: keywordsData = [] } = useFetchKeywordsQuery(null);
   const savedKeywords = keywordsData.map(({ name }) => name);
 
-  const onSubmit = () => {
-    updateCampaign({ ...campaign, keywords, bidAmount, campaignFund, status, town, radius });
-    keywords.filter((keyword) => !savedKeywords.includes(keyword)).forEach((keyword) => addKeyword(keyword));
-    toggleEditMode();
-  };
+  const [campaignName, setCampaignName] = useState(campaign?.campaignName || "");
+  const [keywords, setKeywords] = useState<string[]>(campaign?.keywords || []);
+  const [bidAmount, setBidAmount] = useState(campaign?.bidAmount || 10);
+  const [campaignFund, setCampaignFund] = useState(campaign?.campaignFund || 100);
+  const [status, setStatus] = useState(campaign?.status || false);
+  const [town, setTown] = useState(campaign?.town || "");
+  const [radius, setRadius] = useState(campaign?.radius || 0);
 
-  const onDelete = () => {
-    deleteCampaign(campaign.id);
-    toggleEditMode();
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit({ campaignName, keywords, bidAmount, campaignFund, status, town, radius });
   };
-
-  const onWindowClick = (e: MouseEvent) => {
-    !wrapperRef.current?.contains(e.target as HTMLElement) && toggleEditMode();
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", onWindowClick, { capture: true });
-    return () => {
-      window.removeEventListener("click", onWindowClick, { capture: true });
-    };
-  }, []);
 
   return (
-    <div
-      className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-2"
-      ref={wrapperRef}
-    >
+    <form onSubmit={onFormSubmit}>
       <input
         className="text-3xl font-bold mb-4"
         value={campaignName}
         onChange={(e) => setCampaignName(e.target.value)}
+        required
       />
       <div className="flex flex-row justify-between">
         <p>Keywords</p>
@@ -85,6 +69,7 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
           type="number"
           min={10}
           value={bidAmount}
+          required
           onChange={(e) => setBidAmount(e.target.valueAsNumber)}
         />
       </div>
@@ -93,6 +78,7 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
         <input
           type="number"
           min={10}
+          required
           value={campaignFund}
           onChange={(e) => setCampaignFund(e.target.valueAsNumber)}
         />
@@ -109,6 +95,7 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
         {towns ? (
           <select
             value={town}
+            required
             onChange={(e) => setTown(e.target.value)}
           >
             {towns.map((town) => (
@@ -127,6 +114,7 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
         <input
           type="number"
           min={0}
+          required
           value={radius}
           onChange={(e) => setRadius(e.target.valueAsNumber)}
         />
@@ -134,17 +122,17 @@ export const CampaignForm: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
       <div className="flex justify-between">
         <button
           className="bg-blue-500 rounded-md px-8 py-4 "
-          onClick={onSubmit}
+          type="submit"
         >
-          Apply changes
+          {onSubmitText}
         </button>
         <button
           className="bg-red-500 rounded-md px-8 py-4 "
-          onClick={onDelete}
+          onClick={onDiscard}
         >
-          Delete campaign
+          {onDiscardText}
         </button>
       </div>
-    </div>
+    </form>
   );
 };
