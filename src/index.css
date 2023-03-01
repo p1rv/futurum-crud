@@ -12,7 +12,9 @@
   max-width: 50%;
 }
 
-.campaign-form > input {
+.campaign-form > input,
+.campaign-form .rbt-input-main,
+.campaign-form .rbt-input-hint {
   max-width: 100%;
 }
 
@@ -45,4 +47,6 @@ input.rbt-input-hint {
   box-shadow: 0 5px 10px #00000040;
   border-radius: 0.4em;
   z-index: 10;
+  transform: none !important;
+  inset: auto !important;
 }
