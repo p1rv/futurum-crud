@@ -1,20 +1,6 @@
 {
   "campaigns": [
     {
-      "bidAmount": 10003,
-      "campaignFund": 1000003,
-      "campaignName": "Campaign One",
-      "keywords": [
-        "kw2",
-        "kw6",
-        "kw5"
-      ],
-      "radius": 10,
-      "status": false,
-      "town": "Kraków",
-      "id": 1
-    },
-    {
       "bidAmount": 10000,
       "campaignFund": 100000,
       "campaignName": "Campaign Two",
@@ -44,6 +30,88 @@
       "status": true,
       "town": "Warszawa",
       "id": 3
+    },
+    {
+      "campaignName": "Campaign Four",
+      "keywords": [
+        "kw4",
+        "kw5"
+      ],
+      "bidAmount": 12398,
+      "campaignFund": 1239458754,
+      "status": true,
+      "town": "Katowice",
+      "radius": 36,
+      "id": 5
+    },
+    {
+      "campaignName": "Campaign Five",
+      "keywords": [
+        "kw1",
+        "kw7",
+        "kw5"
+      ],
+      "bidAmount": 10123,
+      "campaignFund": 10043214,
+      "status": true,
+      "town": "Gdańsk",
+      "radius": 5,
+      "id": 6
+    },
+    {
+      "campaignName": "New Campaign",
+      "keywords": [
+        "kw5"
+      ],
+      "bidAmount": 19,
+      "campaignFund": 112,
+      "status": true,
+      "town": "Gdańsk",
+      "radius": 10,
+      "id": 7
+    },
+    {
+      "campaignName": "Campaign One",
+      "keywords": [
+        "kw3",
+        "kw1"
+      ],
+      "bidAmount": 104523,
+      "campaignFund": 100145235,
+      "status": true,
+      "town": "Kraków",
+      "radius": 60,
+      "id": 8
+    },
+    {
+      "campaignName": "",
+      "keywords": [],
+      "bidAmount": 10,
+      "campaignFund": 100,
+      "status": false,
+      "town": "",
+      "radius": 0,
+      "id": 9
+    },
+    {
+      "campaignName": "Campaign One",
+      "keywords": [],
+      "bidAmount": 10,
+      "campaignFund": 100,
+      "status": false,
+      "town": "",
+      "radius": 0,
+      "id": 10
+    },
+    {
+      "campaignName": "gsdfg",
+      "keywords": [],
+      "bidAmount": 10,
+      "campaignFund": 100,
+      "status": false,
+      "town": "Łódź",
+      "radius": 0,
+      "id": 11
     }
   ],
   "towns": [

@@ -20,6 +20,7 @@ export const campaignsApi = createApi({
       query: () => ({ url: "/campaigns", method: "GET" }),
     }),
     addCampaign: builder.mutation<ICampaignEntry, Omit<ICampaignEntry, "id">>({
+      invalidatesTags: () => [{ type: "Campaigns", id: "LIST" }],
       query: (campaign) => ({ url: "/campaigns", method: "POST", body: campaign }),
     }),
     updateCampaign: builder.mutation<ICampaignEntry, ICampaignEntry>({
