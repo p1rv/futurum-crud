@@ -26,6 +26,11 @@
   border-color: #00000080 !important;
 }
 
+.campaign-form .input-error,
+.campaign-form .input-error input {
+  border-color: rgb(225, 29, 72) !important;
+}
+
 input.rbt-input-hint {
   border: 0 !important;
   margin-left: 2px !important;

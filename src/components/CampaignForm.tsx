@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { isString } from "react-bootstrap-typeahead/types/utils";
@@ -23,7 +24,10 @@ interface ICampaignFormProps {
 export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit, onDiscard, onSubmitText, onDiscardText }) => {
   const { data: towns = [] } = useFetchTownsQuery(null);
   const { data: keywordsData = [] } = useFetchKeywordsQuery(null);
+
   const savedKeywords = keywordsData.map(({ name }) => name);
+
+  const inputClassName = ({ error, touched }: FieldMetaState<string>) => classNames({ "input-error": error && touched });
 
   const onFormSubmit = (formValues: React.FormEvent<HTMLFormElement>) => {
     onSubmit(formValues as unknown as Omit<ICampaignEntry, "id">);
@@ -34,6 +38,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
       <input
         {...input}
         {...rest}
+        className={inputClassName(meta)}
       />
       {renderErrMessage(meta)}
     </div>
@@ -44,19 +49,21 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
       <select
         {...input}
         {...rest}
+        className={inputClassName(meta)}
       >
-        <option selected>Choose from the list</option>
+        <option>Choose from the list</option>
         {options}
       </select>
       {renderErrMessage(meta)}
     </div>
   );
 
-  const renderTypeAhead = ({ input: { onFocus, ...rest }, meta, render }: FieldRenderProps<any, HTMLInputElement, any>) => (
+  const renderTypeAhead = ({ input: { onFocus, ...rest }, meta }: FieldRenderProps<any, HTMLInputElement, any>) => (
     <div className="relative input-group flex-1">
       <Typeahead
         id="keywords"
         placeholder="Keywords"
+        className={inputClassName(meta)}
         multiple
         allowNew
         options={savedKeywords}
@@ -88,7 +95,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
       errors.campaignFund = "Campaign Fund of At Least 100 is Mandatory";
     }
     if (!Object.hasOwn(formValues, "town") || !towns?.some(({ name }) => name === formValues.town)) {
-      errors.town = "Town from Available List is Mandatory";
+      errors.town = "Choose Town from Available List";
     }
     if (!Object.hasOwn(formValues, "radius") || formValues.radius < 0) {
       errors.radius = "Radius is Mandatory";
