@@ -22,15 +22,25 @@ interface ICampaignFormProps {
 }
 
 export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit, onDiscard, onSubmitText, onDiscardText }) => {
-  const { data: towns = [] } = useFetchTownsQuery(null);
-  const { data: keywordsData = [] } = useFetchKeywordsQuery(null);
+  const [addKeyword] = useAddKeywordMutation();
+
+  const { data: towns = [] } = useFetchTownsQuery();
+  const { data: keywordsData = [] } = useFetchKeywordsQuery();
 
   const savedKeywords = keywordsData.map(({ name }) => name);
 
   const inputClassName = ({ error, touched }: FieldMetaState<string>) => classNames({ "input-error": error && touched });
 
-  const onFormSubmit = (formValues: React.FormEvent<HTMLFormElement>) => {
-    onSubmit(formValues as unknown as Omit<ICampaignEntry, "id">);
+  const parseKeywords = (kws: any[]) =>
+    kws
+      .map((keyword) => (isString(keyword) ? keyword : keyword.label))
+      .filter((keyword, index, arr) => arr.indexOf(keyword) === index) as string[];
+
+  const onFormSubmit = ({ keywords, ...rest }: Omit<ICampaignEntry, "id">) => {
+    onSubmit({ keywords: parseKeywords(keywords), ...rest } as unknown as Omit<ICampaignEntry, "id">);
+    parseKeywords(keywords)
+      .filter((keyword) => !savedKeywords.includes(keyword))
+      .forEach((keyword) => addKeyword(keyword));
   };
 
   const renderErrMessage = ({ error, touched }: FieldMetaState<string>) => {
@@ -64,7 +74,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
     </div>
   );
 
-  const renderTypeAhead = ({ input: { onFocus, ...rest }, meta }: FieldRenderProps<any, HTMLInputElement, any>) => (
+  const renderTypeAhead = ({ input: { onFocus, ...rest }, meta }: FieldRenderProps<any, HTMLInputElement, any[]>) => (
     <div className="relative input-group flex-1">
       <Typeahead
         id="keywords"
@@ -73,7 +83,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
         multiple
         allowNew
         options={savedKeywords}
-        selected={rest.value || campaign?.keywords || []}
+        selected={rest.value ? parseKeywords(rest.value) : campaign?.keywords || []}
         {...rest}
       />
       {renderErrMessage(meta)}
@@ -106,7 +116,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
   return (
     <Form
       initialValues={campaign}
-      onSubmit={onFormSubmit}
+      onSubmit={(formValues) => onFormSubmit(formValues as unknown as Omit<ICampaignEntry, "id">)}
       validate={(formValues) => validate(formValues as unknown as ICampaignEntry)}
       render={({ handleSubmit }) => (
         <form
@@ -182,13 +192,13 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
           </div>
           <div className="flex justify-between">
             <button
-              className="bg-blue-500 rounded-r-none rounded-lg px-8 py-4 flex-1"
+              className="bg-blue-500 mx-4 rounded-lg px-8 py-4 flex-1"
               type="submit"
             >
               {onSubmitText}
             </button>
             <button
-              className="bg-red-500 rounded-l-none rounded-lg px-8 py-4 flex-1"
+              className="bg-red-500 mx-4 rounded-lg px-8 py-4 flex-1"
               onClick={onDiscard}
             >
               {onDiscardText}

@@ -5,7 +5,7 @@ import { CampaignAdd } from "./CampaignAdd";
 import { useState } from "react";
 
 export const CampaignsList: React.FC = () => {
-  const { data, error, isFetching } = useFetchCampaignsQuery(null);
+  const { data, error, isFetching } = useFetchCampaignsQuery();
   const [showAddForm, setShowAddForm] = useState(false);
 
   return (
