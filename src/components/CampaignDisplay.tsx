@@ -10,7 +10,7 @@ export const CampaignDisplay: React.FC<ICampaignDetailsProps> = ({ campaign, tog
       <p className="text-3xl font-bold mb-4">{campaign.campaignName}</p>
       <div className="flex flex-row justify-between">
         <p>Keywords</p>
-        <p>{campaign.keywords.join(", ")}</p>
+        <p className="max-w-[50%]">{campaign.keywords.join(", ")}</p>
       </div>
       <div className="flex flex-row justify-between">
         <p>Bid Amount</p>
