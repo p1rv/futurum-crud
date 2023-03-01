@@ -9,7 +9,7 @@ interface ISwitchProps {
 export const Switch: React.FC<ISwitchProps> = ({ disabled, value, onClick }) => {
   const classes = classNames(
     "appearance-none",
-    "w-[45px]",
+    "!w-[45px]",
     "h-[25px]",
     "my-1",
     "!rounded-full",

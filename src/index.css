@@ -9,17 +9,11 @@
   border-radius: 0.4em;
   padding: 0.15em 0.4em !important;
   transition: border 0.2s;
-  max-width: 50%;
+  width: 100%;
 }
 
 .campaign-form input[type="checkbox"] {
   border: 0 !important;
-}
-
-.campaign-form .rbt-input-main,
-.campaign-form .rbt-input-hint {
-  max-width: 100%;
-  width: 100%;
 }
 
 .campaign-form input:hover,
