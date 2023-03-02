@@ -1,4 +1,4 @@
-import { useAddCampaignMutation, useAddKeywordMutation } from "../store";
+import { useAddCampaignMutation } from "../store";
 import { ICampaignEntry } from "../types";
 import { CampaignForm } from "./CampaignForm";
 
@@ -6,9 +6,8 @@ interface ICampaignAddProps {
   closeForm: () => void;
 }
 
-export const CampaignAdd: React.FC<ICampaignAddProps> = ({ closeForm }) => {
+const CampaignAdd: React.FC<ICampaignAddProps> = ({ closeForm }) => {
   const [addCampaign] = useAddCampaignMutation();
-  const [addKeyword] = useAddKeywordMutation();
 
   const onSubmit = (newCampaign: Omit<ICampaignEntry, "id">) => {
     addCampaign(newCampaign);
@@ -30,3 +29,5 @@ export const CampaignAdd: React.FC<ICampaignAddProps> = ({ closeForm }) => {
     </div>
   );
 };
+
+export default CampaignAdd;

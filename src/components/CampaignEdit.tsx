@@ -4,7 +4,7 @@ import { ICampaignEntry } from "../types";
 import { CampaignForm } from "./CampaignForm";
 import { ICampaignDetailsProps } from "./CampaignItem";
 
-export const CampaignEdit: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
+const CampaignEdit: React.FC<ICampaignDetailsProps> = ({ campaign, toggleEditMode }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const [updateCampaign] = useUpdateCampaignMutation();
@@ -43,3 +43,5 @@ export const CampaignEdit: React.FC<ICampaignDetailsProps> = ({ campaign, toggle
     </div>
   );
 };
+
+export default CampaignEdit;

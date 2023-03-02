@@ -1,8 +1,8 @@
 import { CampaignItem } from "./CampaignItem";
 import { useFetchCampaignsQuery } from "../store";
-import { CampaignAdd } from "./CampaignAdd";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Skeleton } from "./Skeleton";
+const CampaignAdd = lazy(() => import("./CampaignAdd"));
 
 export const CampaignsList: React.FC = () => {
   const { data, error, isFetching } = useFetchCampaignsQuery();
@@ -22,7 +22,7 @@ export const CampaignsList: React.FC = () => {
         <Skeleton
           key={`loading-${i}`}
           rowsNumber={7}
-          className="w-full shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl"
+          campaign
         />
       ))}
     </div>
@@ -36,7 +36,18 @@ export const CampaignsList: React.FC = () => {
       >
         + Add Campaign
       </button>
-      {showAddForm && <CampaignAdd closeForm={() => setShowAddForm(false)} />}
+      {showAddForm && (
+        <Suspense
+          fallback={
+            <Skeleton
+              rowsNumber={14}
+              campaign
+            />
+          }
+        >
+          <CampaignAdd closeForm={() => setShowAddForm(false)} />
+        </Suspense>
+      )}
       {isFetching
         ? renderLoading
         : data?.map((campaign) => (

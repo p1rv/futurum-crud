@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { ICampaignEntry } from "../types";
 import { CampaignDisplay } from "./CampaignDisplay";
-import { CampaignEdit } from "./CampaignEdit";
+import { Skeleton } from "./Skeleton";
+const CampaignEdit = lazy(() => import("./CampaignEdit"));
 
 interface ICampaignItemProps {
   campaign: ICampaignEntry;
@@ -25,11 +26,20 @@ export const CampaignItem: React.FC<ICampaignItemProps> = ({ campaign }) => {
     );
   }
   return (
-    <CampaignEdit
-      campaign={campaign}
-      toggleEditMode={() => {
-        setEditMode(false);
-      }}
-    />
+    <Suspense
+      fallback={
+        <Skeleton
+          rowsNumber={7}
+          campaign
+        />
+      }
+    >
+      <CampaignEdit
+        campaign={campaign}
+        toggleEditMode={() => {
+          setEditMode(false);
+        }}
+      />
+    </Suspense>
   );
 };

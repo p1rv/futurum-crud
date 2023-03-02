@@ -5,10 +5,14 @@ interface ISkeletonProps {
   rowsNumber?: number;
   className?: string;
   pills?: boolean;
+  campaign?: boolean;
 }
 
-export const Skeleton: React.FC<ISkeletonProps> = ({ rowOnly, rowsNumber, className, pills }) => {
-  const classes = classNames(className, "animate-pulse", "bg-gray-200/90", "flex", "flex-wrap", "rounded-xl", { "p-1": !rowOnly });
+export const Skeleton: React.FC<ISkeletonProps> = ({ rowOnly, rowsNumber, className, pills, campaign }) => {
+  const classes = classNames(className, "animate-pulse", "bg-gray-200/90", "flex", "flex-wrap", "rounded-xl", {
+    "p-1": !rowOnly,
+    "w-full shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl": campaign,
+  });
   const innerClasses = classNames("dark:bg-gray-300", "bg-gray-200", "rounded-full", {
     "w-16": pills,
     "w-full": !pills,
