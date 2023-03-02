@@ -31,15 +31,8 @@
   border-color: rgb(225, 29, 72) !important;
 }
 
-input.rbt-input-hint {
-  border: 0 !important;
-  margin-left: 2px !important;
-}
-
-.rbt-token {
+.rbt-input-wrapper > div:nth-last-child(1) {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 #keywords {
@@ -52,4 +45,5 @@ input.rbt-input-hint {
   z-index: 10;
   transform: none !important;
   inset: auto !important;
+  width: 100%;
 }
