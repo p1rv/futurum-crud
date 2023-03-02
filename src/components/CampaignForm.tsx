@@ -25,8 +25,8 @@ interface ICampaignFormProps {
 export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit, onDiscard, onSubmitText, onDiscardText }) => {
   const [addKeyword] = useAddKeywordMutation();
 
-  const { data: towns = [], isFetching: isFetchingTowns } = useFetchTownsQuery();
-  const { data: keywordsData = [], isFetching: isFetchingKeywords } = useFetchKeywordsQuery();
+  const { data: towns = [], isFetching: isFetchingTowns, error: townsError } = useFetchTownsQuery();
+  const { data: keywordsData = [], isFetching: isFetchingKeywords, error: keywordsError } = useFetchKeywordsQuery();
 
   const savedKeywords = keywordsData.map(({ name }) => name);
 
@@ -133,7 +133,9 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
           />
           <div className="flex flex-row justify-between !mt-4">
             <p>Keywords</p>
-            {isFetchingKeywords ? (
+            {keywordsError ? (
+              <p>An error occured while trying to access keywords.</p>
+            ) : isFetchingKeywords ? (
               <Skeleton
                 rowsNumber={campaign?.keywords.length || 3}
                 className="input-group flex-1"
@@ -181,7 +183,9 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
           </div>
           <div className="flex flex-row justify-between">
             <p>Town</p>
-            {isFetchingTowns ? (
+            {townsError ? (
+              <p>An error occured while trying to access towns list.</p>
+            ) : isFetchingTowns ? (
               <Skeleton
                 rowOnly
                 className="input-group flex-1"
