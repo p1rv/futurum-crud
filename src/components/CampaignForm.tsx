@@ -11,6 +11,7 @@ import {
   useUpdateCampaignMutation,
 } from "../store";
 import { ICampaignEntry } from "../types";
+import { Skeleton } from "./Skeleton";
 import { Switch } from "./Switch";
 
 interface ICampaignFormProps {
@@ -24,8 +25,8 @@ interface ICampaignFormProps {
 export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit, onDiscard, onSubmitText, onDiscardText }) => {
   const [addKeyword] = useAddKeywordMutation();
 
-  const { data: towns = [] } = useFetchTownsQuery();
-  const { data: keywordsData = [] } = useFetchKeywordsQuery();
+  const { data: towns = [], isFetching: isFetchingTowns } = useFetchTownsQuery();
+  const { data: keywordsData = [], isFetching: isFetchingKeywords } = useFetchKeywordsQuery();
 
   const savedKeywords = keywordsData.map(({ name }) => name);
 
@@ -132,10 +133,18 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
           />
           <div className="flex flex-row justify-between !mt-4">
             <p>Keywords</p>
-            <Field
-              name="keywords"
-              component={renderTypeAhead}
-            />
+            {isFetchingKeywords ? (
+              <Skeleton
+                rowsNumber={campaign?.keywords.length || 3}
+                className="input-group flex-1"
+                pills
+              />
+            ) : (
+              <Field
+                name="keywords"
+                component={renderTypeAhead}
+              />
+            )}
           </div>
           <div className="flex flex-row justify-between">
             <p>Bid Amount</p>
@@ -172,13 +181,20 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
           </div>
           <div className="flex flex-row justify-between">
             <p>Town</p>
-            <Field
-              name="town"
-              options={towns?.map((town) => (
-                <option key={town.id}>{town.name}</option>
-              ))}
-              component={renderSelect}
-            />
+            {isFetchingTowns ? (
+              <Skeleton
+                rowOnly
+                className="input-group flex-1"
+              />
+            ) : (
+              <Field
+                name="town"
+                options={towns?.map((town) => (
+                  <option key={town.id}>{town.name}</option>
+                ))}
+                component={renderSelect}
+              />
+            )}
           </div>
           <div className="flex flex-row justify-between">
             <p>Radius</p>
