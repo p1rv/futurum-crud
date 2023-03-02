@@ -1,4 +1,4 @@
-import { createApi, fakeBaseQuery, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore/lite";
 import { firebase } from "../../apis/firestore";
 import { ICampaignEntry } from "../../types";

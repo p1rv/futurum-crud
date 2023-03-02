@@ -1,15 +1,5 @@
-import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
-import { Typeahead } from "react-bootstrap-typeahead";
-import { isString } from "react-bootstrap-typeahead/types/utils";
-import { Form, Field, FieldMetaState, FieldRenderProps } from "react-final-form";
-import {
-  useAddKeywordMutation,
-  useDeleteCampaignMutation,
-  useFetchKeywordsQuery,
-  useFetchTownsQuery,
-  useUpdateCampaignMutation,
-} from "../store";
+import { Form, Field } from "react-final-form";
+import { useAddKeywordMutation, useFetchKeywordsQuery, useFetchTownsQuery } from "../store";
 import { ICampaignEntry } from "../types";
 import { parseKeywords, renderInput, renderSelect, renderTypeAhead } from "../utils/campaignForm";
 import { Skeleton } from "./Skeleton";

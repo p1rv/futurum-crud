@@ -1,16 +1,6 @@
-import { useState } from "react";
-import { Typeahead } from "react-bootstrap-typeahead";
-import { isString } from "react-bootstrap-typeahead/types/utils";
-import {
-  useAddCampaignMutation,
-  useAddKeywordMutation,
-  useDeleteCampaignMutation,
-  useFetchKeywordsQuery,
-  useFetchTownsQuery,
-} from "../store";
+import { useAddCampaignMutation, useAddKeywordMutation } from "../store";
 import { ICampaignEntry } from "../types";
 import { CampaignForm } from "./CampaignForm";
-import { Switch } from "./Switch";
 
 interface ICampaignAddProps {
   closeForm: () => void;
