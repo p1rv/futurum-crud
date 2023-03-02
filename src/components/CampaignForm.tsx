@@ -41,6 +41,14 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
     if (!Object.hasOwn(formValues, "campaignFund") || formValues.campaignFund < 100) {
       errors.campaignFund = "Campaign Fund of At Least 100 is Mandatory";
     }
+    if (
+      Object.hasOwn(formValues, "bidAmount") &&
+      Object.hasOwn(formValues, "campaignFund") &&
+      parseFloat(formValues.bidAmount as unknown as string) > parseFloat(formValues.campaignFund as unknown as string)
+    ) {
+      errors.campaignFund = "Campaign Fund Cannot Be Lower Than Bid Amount";
+      errors.bidAmount = "Bid Amount Cannot Be Higher Than Campaign Fund";
+    }
     if (!Object.hasOwn(formValues, "town") || !towns?.some(({ name }) => name === formValues.town)) {
       errors.town = "Choose Town from Available List";
     }
