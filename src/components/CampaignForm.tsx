@@ -11,6 +11,7 @@ import {
   useUpdateCampaignMutation,
 } from "../store";
 import { ICampaignEntry } from "../types";
+import { parseKeywords, renderInput, renderSelect, renderTypeAhead } from "../utils/campaignForm";
 import { Skeleton } from "./Skeleton";
 import { Switch } from "./Switch";
 
@@ -30,66 +31,11 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
 
   const savedKeywords = keywordsData.map(({ name }) => name);
 
-  const inputClassName = ({ error, touched }: FieldMetaState<string>) => classNames({ "input-error": error && touched });
-
-  const parseKeywords = (kws: any[]) =>
-    kws
-      .map((keyword) => (isString(keyword) ? keyword : keyword.label))
-      .filter((keyword, index, arr) => arr.indexOf(keyword) === index) as string[];
-
   const onFormSubmit = ({ keywords, ...rest }: Omit<ICampaignEntry, "id">) => {
-    onSubmit({ keywords: parseKeywords(keywords), ...rest } as unknown as Omit<ICampaignEntry, "id">);
-    parseKeywords(keywords)
-      .filter((keyword) => !savedKeywords.includes(keyword))
-      .forEach((keyword) => addKeyword(keyword));
+    const parsedKeywords = parseKeywords(keywords);
+    onSubmit({ keywords: parsedKeywords, ...rest } as unknown as Omit<ICampaignEntry, "id">);
+    parsedKeywords.filter((keyword) => !savedKeywords.includes(keyword)).forEach((keyword) => addKeyword(keyword));
   };
-
-  const renderErrMessage = ({ error, touched }: FieldMetaState<string>) => {
-    if (error && touched) {
-      return <p className="absolute left-2 text-sm text-rose-600 min-w-max">{error}</p>;
-    }
-  };
-
-  const renderInput = ({ input, meta, ...rest }: FieldRenderProps<any, HTMLInputElement, any>) => (
-    <div className="relative input-group flex-1">
-      <input
-        {...input}
-        {...rest}
-        className={inputClassName(meta)}
-      />
-      {renderErrMessage(meta)}
-    </div>
-  );
-
-  const renderSelect = ({ input, meta, options, ...rest }: FieldRenderProps<any, HTMLSelectElement, any>) => (
-    <div className="relative input-group flex-1">
-      <select
-        {...input}
-        {...rest}
-        className={inputClassName(meta)}
-      >
-        <option>Choose from the list</option>
-        {options}
-      </select>
-      {renderErrMessage(meta)}
-    </div>
-  );
-
-  const renderTypeAhead = ({ input: { onFocus, ...rest }, meta }: FieldRenderProps<any, HTMLInputElement, any[]>) => (
-    <div className="relative input-group flex-1">
-      <Typeahead
-        id="keywords"
-        placeholder="Keywords"
-        className={inputClassName(meta)}
-        multiple
-        allowNew
-        options={savedKeywords}
-        selected={rest.value ? parseKeywords(rest.value) : campaign?.keywords || []}
-        {...rest}
-      />
-      {renderErrMessage(meta)}
-    </div>
-  );
 
   const validate = (formValues: ICampaignEntry) => {
     const errors = {} as { [key in keyof ICampaignEntry]: string };
@@ -144,6 +90,8 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             ) : (
               <Field
                 name="keywords"
+                savedKeywords={savedKeywords}
+                defaultKeywords={campaign?.keywords}
                 component={renderTypeAhead}
               />
             )}
