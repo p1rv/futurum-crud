@@ -1,7 +1,7 @@
 import { Form, Field } from "react-final-form";
 import { useAddKeywordMutation, useFetchKeywordsQuery, useFetchTownsQuery } from "../store";
 import { ICampaignEntry } from "../types";
-import { parseKeywords, renderInput, renderSelect, renderTypeAhead } from "../utils/campaignForm";
+import { parseKeywords, renderInput, renderSelect, renderTypeAhead } from "../utils/campaignFormUtils";
 import { Skeleton } from "./Skeleton";
 import { Switch } from "./Switch";
 
@@ -58,7 +58,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
       render={({ handleSubmit }) => (
         <form
           onSubmit={handleSubmit}
-          className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-3 [&>div>p]:flex-1"
+          className="campaign-form w-full flex flex-col justify-around shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl [&>div]:my-3 [&>div>label]:flex-1"
         >
           <Field
             name="campaignName"
@@ -68,9 +68,9 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             component={renderInput}
           />
           <div className="flex flex-row justify-between !mt-4">
-            <p>Keywords</p>
+            <label>Keywords</label>
             {keywordsError ? (
-              <p>An error occured while trying to access keywords.</p>
+              <label>An error occured while trying to access keywords.</label>
             ) : isFetchingKeywords ? (
               <Skeleton
                 rowsNumber={campaign?.keywords.length || 3}
@@ -87,7 +87,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             )}
           </div>
           <div className="flex flex-row justify-between">
-            <p>Bid Amount</p>
+            <label>Bid Amount</label>
             <Field
               name="bidAmount"
               placeholder="Bid Amount"
@@ -97,7 +97,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             />
           </div>
           <div className="flex flex-row justify-between">
-            <p>Campaign Fund</p>
+            <label>Campaign Fund</label>
             <Field
               name="campaignFund"
               placeholder="Campaign Fund"
@@ -107,7 +107,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             />
           </div>
           <div className="flex flex-row justify-between">
-            <p>Status</p>
+            <label>Status</label>
             <Field
               name="status"
               type="checkbox"
@@ -120,9 +120,9 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             />
           </div>
           <div className="flex flex-row justify-between">
-            <p>Town</p>
+            <label>Town</label>
             {townsError ? (
-              <p>An error occured while trying to access towns list.</p>
+              <label>An error occured while trying to access towns list.</label>
             ) : isFetchingTowns ? (
               <Skeleton
                 rowOnly
@@ -139,7 +139,7 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
             )}
           </div>
           <div className="flex flex-row justify-between">
-            <p>Radius</p>
+            <label>Radius</label>
             <Field
               name="radius"
               type="number"
