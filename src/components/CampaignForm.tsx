@@ -148,15 +148,15 @@ export const CampaignForm: React.FC<ICampaignFormProps> = ({ campaign, onSubmit,
               component={renderInput}
             />
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-col sm:flex-row">
             <button
-              className="bg-blue-500 mx-4 rounded-lg px-8 py-4 flex-1"
+              className="bg-blue-500 mb-4 sm:mb-0 sm:mx-4 rounded-lg px-8 py-4 flex-1"
               type="submit"
             >
               {onSubmitText}
             </button>
             <button
-              className="bg-red-500 mx-4 rounded-lg px-8 py-4 flex-1"
+              className="bg-red-500 sm:mx-4 rounded-lg px-8 py-4 flex-1"
               onClick={onDiscard}
             >
               {onDiscardText}
