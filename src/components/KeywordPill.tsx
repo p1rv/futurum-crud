@@ -21,7 +21,9 @@ export const KeywordPill: React.FC<ITypeaheadTokenArgs> = ({ keyword, props }) =
     "inline-flex",
     "flex-row",
     "items-center",
-    "group"
+    "group",
+    "transition-all",
+    "duration-200"
   );
 
   const innerButtonClasses = classNames(
@@ -32,6 +34,8 @@ export const KeywordPill: React.FC<ITypeaheadTokenArgs> = ({ keyword, props }) =
     "group-hover:bg-white/50",
     "ml-1",
     "relative",
+    "transition-all",
+    "duration-200",
     "after:content-['']",
     "after:w-3",
     "after:border-black",
