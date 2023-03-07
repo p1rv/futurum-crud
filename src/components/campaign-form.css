@@ -1,0 +1,84 @@
+.campaign-form input,
+.campaign-form select {
+  outline: none;
+  border: 2px solid #00000020 !important;
+  border-radius: 0.4em;
+  padding: 0.15em 0.4em !important;
+  transition: border 0.2s;
+  width: 100%;
+}
+
+.campaign-form input[type="checkbox"] {
+  border: 0 !important;
+}
+
+.campaign-form input:hover,
+.campaign-form select:hover {
+  border-color: #00000050 !important;
+}
+
+.campaign-form input:focus,
+.campaign-form select:focus {
+  border-color: #00000080 !important;
+}
+
+.campaign-form .input-error,
+.campaign-form .input-error input {
+  border-color: rgb(225, 29, 72) !important;
+}
+
+.rbt-input-wrapper > div:nth-last-child(1) {
+  display: flex;
+}
+
+#keywords {
+  display: flex !important;
+  flex-direction: column;
+  background-color: white;
+  padding: 0.5em 1em;
+  box-shadow: 0 5px 10px #00000040;
+  border-radius: 0.4em;
+  z-index: 10;
+  transform: none !important;
+  inset: auto !important;
+  width: 100%;
+}
+
+.rbt-token {
+  padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+  border-radius: 100px;
+  background-color: rgb(59, 130, 246);
+  max-width: max-content;
+  margin: 0.25rem;
+  display: inline-flex;
+  flex-direction: row;
+  transition: all 0.2s;
+  align-items: center;
+  cursor: default;
+}
+
+.rbt-token:hover {
+  background-color: rgb(96, 165, 250);
+}
+
+.rbt-token-remove-button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100px;
+  margin-left: 0.25rem;
+  transition: all 0.2s;
+  background-color: #ffffff80;
+}
+
+.rbt-token-remove-button:hover {
+  background-color: #ffffffe0;
+}
+
+.visually-hidden {
+  display: none;
+}

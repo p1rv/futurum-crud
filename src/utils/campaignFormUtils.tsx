@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { isString } from "react-bootstrap-typeahead/types/utils";
 import { FieldMetaState, FieldRenderProps } from "react-final-form";
-import { KeywordPill } from "../components/KeywordPill";
 
 const inputClassName = ({ error, touched }: FieldMetaState<string>) => classNames({ "input-error": error && touched });
 
@@ -58,12 +57,6 @@ export const renderTypeAhead = ({
       options={savedKeywords}
       selected={rest.value ? parseKeywords(rest.value) : defaultKeywords || []}
       {...rest}
-      renderToken={(kw, props) => (
-        <KeywordPill
-          keyword={kw}
-          props={props}
-        />
-      )}
     />
     {renderErrMessage(meta)}
   </div>

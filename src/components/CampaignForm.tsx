@@ -4,6 +4,7 @@ import { ICampaignEntry } from "../types";
 import { parseKeywords, renderInput, renderSelect, renderTypeAhead } from "../utils/campaignFormUtils";
 import { Skeleton } from "./Skeleton";
 import { Switch } from "./Switch";
+import "./campaign-form.css";
 
 interface ICampaignFormProps {
   campaign?: ICampaignEntry;
