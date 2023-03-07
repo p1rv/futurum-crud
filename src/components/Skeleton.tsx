@@ -14,7 +14,7 @@ export const Skeleton: React.FC<ISkeletonProps> = ({ rowOnly, rowsNumber, classN
     "w-full shadow-[0_0_30px_#00000020] rounded-2xl px-10 py-6 my-8 text-xl": campaign,
   });
   const innerClasses = classNames("dark:bg-gray-300", "bg-gray-200", "rounded-full", {
-    "w-16": pills,
+    "w-20 h-9": pills,
     "w-full": !pills,
     "m-1 h-6": !rowOnly,
     "h-full": rowOnly,
